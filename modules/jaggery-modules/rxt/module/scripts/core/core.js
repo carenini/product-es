@@ -160,7 +160,9 @@ var core = {};
         var rxtPaths = GovernanceUtils.findGovernanceArtifacts(DEFAULT_MEDIA_TYPE, this.registry.registry);
         var content;
         var rxtDefinition;
-        log.info('RXT paths: ' + stringify(rxtPaths));
+        if(log.isDebugEnabled()){
+            log.debug('RXT paths: ' + stringify(rxtPaths));
+        }
         for (var index in rxtPaths) {
             try {
                 content = this.registry.get(rxtPaths[index]);
@@ -592,15 +594,21 @@ var core = {};
             throw 'Unable to locate the rxt definition for type: ' + type + ' in order to return the category field.';
         }
         if (!rxtDefinition.meta) {
-            log.warn('Unable to locate meta information in the rxt definition for type: ' + type + '.Cannot fetch category field');
+            if(log.isDebugEnabled()){
+                log.debug('Unable to locate meta information in the rxt definition for type: ' + type + '.Cannot fetch category field');
+            }
             return categoryField;
         }
         if (!rxtDefinition.meta.categories) {
-            log.warn('Unable to locate category information in the rxt definition for type: ' + type + '.Cannot fetch category field');
+            if(log.isDebugEnabled()){
+                log.debug('Unable to locate category information in the rxt definition for type: ' + type + '.Cannot fetch category field');
+            }
             return categoryField;
         }
         if (!rxtDefinition.meta.categories.categoryField) {
-            log.warn('No category details have been defined for the rxt definition of type: ' + type + '.');
+            if(log.isDebugEnabled()){
+                log.debug('No category details have been defined for the rxt definition of type: ' + type + '.');
+            }
             return categoryField;
         }
         categoryField = rxtDefinition.meta.categories.categoryField;
@@ -622,15 +630,21 @@ var core = {};
             throw 'Unable to locate the rxt definition for type: ' + type + ' in order to return the searchable fields';
         }
         if (!rxtDefinition.meta) {
-            log.warn('Unable to locate meta information in the rxt definition for type: ' + type + '.Cannot fetch searchable fields');
+            if(log.isDebugEnabled()){
+                log.debug('Unable to locate meta information in the rxt definition for type: ' + type + '.Cannot fetch searchable fields');
+            }
             return searchableFields;
         }
         if (!rxtDefinition.meta.search) {
-            log.warn('Unable to locate search information in the rxt definition for type: ' + type + '.Cannot fetch searchable fields');
+            if(log.isDebugEnabled()){
+                log.debug('Unable to locate search information in the rxt definition for type: ' + type + '.Cannot fetch searchable fields');
+            }
             return searchableFields;
         }
         if (!rxtDefinition.meta.search.searchableFields) {
-            log.warn('No searchable fields defined in the rxt definition for type: ' + type + '.Cannot fetch searchable fields');
+            if(log.isDebugEnabled()){
+                log.debug('No searchable fields defined in the rxt definition for type: ' + type + '.Cannot fetch searchable fields');
+            }
             return searchableFields;
         }
         searchableFields = rxtDefinition.meta.search.searchableFields;
@@ -661,12 +675,16 @@ var core = {};
             throw 'Unable to locate the rxt definition for type: ' + type + ' in order to retrieve field data for ' + tableName + '_' + fieldName;
         }
         if ((!template.content) && (!template.content.table)) {
-            log.warn('Content or table definition was not found in the rxt definition of type: ' + type + '.Cannot fetch field data for ' + tableName + '_' + fieldName);
+            if(log.isDebugEnabled()){
+                log.debug('Content or table definition was not found in the rxt definition of type: ' + type + '.Cannot fetch field data for ' + tableName + '_' + fieldName);
+            }
             return field;
         }
         var table = getRxtTable(template.content.table, tableName);
         if (!table) {
-            log.warn('Unable to locate table definition : ' + tableName + ' in rxt definition of type: ' + type + '.Cannot fetch field data for ' + tableName + '_' + fieldName);
+            if(log.isDebugEnabled()){
+                log.debug('Unable to locate table definition : ' + tableName + ' in rxt definition of type: ' + type + '.Cannot fetch field data for ' + tableName + '_' + fieldName);
+            }
             return field;
         }
         field = getRxtField(table, fieldName);
